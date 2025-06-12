@@ -150,7 +150,7 @@
                     <asp:Button ID="Button4" runat="server" Text="ELIMINAR" Width="119px" />
                 </label>
             </fieldset>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="600px" OnRowDataBound = "OnRowDataBound">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="672px">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" />
                     <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
@@ -158,7 +158,7 @@
                     <asp:BoundField DataField="TELEFONO" HeaderText="TELEFONO" />
                     <asp:BoundField DataField="DOCUMENTO" HeaderText="DOCUMENTO" />
                     <asp:BoundField DataField="DIRECCION" HeaderText="DIRECCION" />
-                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button"/>
+                    <asp:ButtonField CommandName="Select" HeaderText="CHECK" ShowHeader="True" Text="SELECT" />
                 </Columns>
             </asp:GridView>
         </div>

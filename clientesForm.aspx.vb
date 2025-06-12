@@ -33,9 +33,12 @@ Public Class clientesForm
         Button5.Enabled = False
         Button5.Visible = False
         'id configuracion inicial de ejecucion
-        txtID.Text = "0"
+        'txtID.Text = "0"
         txtID.Enabled = False
         txtID.Visible = True
+        'agregar nuevo
+        Button2.Enabled = True
+        Button2.Visible = True
 
     End Sub
     Private Sub Poblar()
@@ -50,7 +53,7 @@ Public Class clientesForm
             GridView1.DataSource = dst.Tables(0)
             GridView1.DataBind()
             'ocultando el boton de eliminar
-            GridView1.Columns.Item(6).Visible = False
+            'GridView1.Columns.Item(6).Visible = False
         Else
             GridView1.DataSource = Nothing
             GridView1.DataBind()
@@ -63,26 +66,6 @@ Public Class clientesForm
         Poblar()
 
     End Sub
-    Protected Sub OnRowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-        Dim item As String = Convert.ToInt32(e.Values.Keys(ID))
-
-        Dim cmd As New SqlClient.SqlCommand("delete from estudiante where id=" & item, Conexiones.Cnn)
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Protected Sub OnRowDataBound(sender As Object, e As GridViewRowEventArgs)
-        If e.Row.RowType = DataControlRowType.DataRow Then
-            Dim item As String = e.Row.Cells(0).Text
-            For Each button As Button In e.Row.Cells(6).Controls.OfType(Of Button)()
-                If button.CommandName = "Delete" Then
-                    button.Attributes("onclick") = "if(!confirm('Do you want to delete " + item + "?')){ return false; };"
-
-
-                End If
-            Next
-        End If
-    End Sub
-
     Public Sub limpiarcajas()
 
     End Sub
@@ -90,6 +73,7 @@ Public Class clientesForm
     'boton cancelar
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ControlesIniciales()
+        Limpiar()
     End Sub
 
     'boton agregar nuevo
@@ -145,5 +129,28 @@ Public Class clientesForm
         field4.Text = ""
         field5.Text = ""
         field1.Focus()
+    End Sub
+
+    Protected Sub GridView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles GridView1.SelectedIndexChanged
+        txtID.Text = GridView1.SelectedRow.Cells(0).Text
+        field1.Text = GridView1.SelectedRow.Cells(1).Text
+        field2.Text = GridView1.SelectedRow.Cells(2).Text
+        field3.Text = GridView1.SelectedRow.Cells(3).Text
+        field4.Text = GridView1.SelectedRow.Cells(4).Text
+        field5.Text = GridView1.SelectedRow.Cells(5).Text
+        Button2.Enabled = False
+        Button2.Visible = False
+    End Sub
+
+    'editar
+    Protected Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        field1.Enabled = True
+        field2.Enabled = True
+        field3.Enabled = True
+        field4.Enabled = True
+        field5.Enabled = True
+        Button5.Enabled = True
+        Button5.Visible = True
+
     End Sub
 End Class
