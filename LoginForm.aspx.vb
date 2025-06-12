@@ -24,7 +24,7 @@
         If ds.Tables(0).Rows.Count > 0 Then
             CreateCookies()
 
-            Response.Redirect("~/estudiantes.aspx")
+            Response.Redirect("~/clientesForm.aspx")
 
         Else
             MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
