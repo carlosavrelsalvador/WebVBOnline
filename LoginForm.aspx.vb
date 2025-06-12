@@ -6,10 +6,19 @@
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim filePath As String = ""
+        Dim base64encoded As String = vbNull
         Conexiones.AbrirConexion()
         Conexiones.Cnn.Open()
 
-        Dim da As New SqlClient.SqlDataAdapter("select * from usuarios where usuario='" & txtUsuario.Text & "' and clave='" & txtClave.Text & "'", Conexiones.Cnn)
+        'Dim hash = New System.Security.Cryptography.SHA256Managed().ComputeHash(System.Text.Encoding.UTF8.GetBytes("123456"))
+        'MsgBox(Convert.ToBase64String(hash))
+
+        Dim has As New OC.Core.Crypto.Hash
+        Dim texto As String = txtClave.Text
+        Dim TxtEncriptado As String = has.Sha256(texto).ToLower
+
+        Dim da As New SqlClient.SqlDataAdapter("select * from usuarios where usuario='" & txtUsuario.Text & "' and clave='" & TxtEncriptado & "'", Conexiones.Cnn)
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -54,4 +63,5 @@
 
 
     End Sub
+
 End Class
