@@ -108,7 +108,7 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" style="margin: 40px 400px 40px 400px;">
     <div class="form-style-3">
         <div style="width: fit-content; background-color: #99CCFF;">
             <h2>REGISTRO DE CLIENTES</h2>

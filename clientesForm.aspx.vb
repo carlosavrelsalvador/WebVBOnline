@@ -104,7 +104,7 @@ Public Class clientesForm
                     Poblar()
                     Limpiar()
                 Else
-                    Dim cmd As New SqlClient.SqlCommand("update estudiante Set nombre='" & field1.Text & "',correo='" & field2.Text & "'telefono='" & field3.Text & "'documento='" & field4.Text & "'direccion='" & field5.Text & "' where id=" & txtID.Text, Conexiones.Cnn)
+                    Dim cmd As New SqlClient.SqlCommand("update clientes Set nombre='" & field1.Text & "',correo='" & field2.Text & "',telefono='" & field3.Text & "',documento='" & field4.Text & "',direccion='" & field5.Text & "' where id=" & txtID.Text, Conexiones.Cnn)
                     cmd.ExecuteNonQuery()
 
                     Poblar()
@@ -140,6 +140,8 @@ Public Class clientesForm
         field5.Text = GridView1.SelectedRow.Cells(5).Text
         Button2.Enabled = False
         Button2.Visible = False
+        Button3.Enabled = True
+        Button3.Visible = True
     End Sub
 
     'editar
@@ -151,6 +153,9 @@ Public Class clientesForm
         field5.Enabled = True
         Button5.Enabled = True
         Button5.Visible = True
-
+        Button2.Enabled = False
+        Button2.Visible = False
+        Button3.Enabled = False
+        Button3.Visible = False
     End Sub
 End Class
