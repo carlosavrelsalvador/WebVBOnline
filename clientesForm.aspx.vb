@@ -16,7 +16,7 @@ Public Class clientesForm
     End Sub
     Private Sub VerificaCookie()
         If Request.Cookies("EmpleadoASP") Is Nothing Then
-            Response.Redirect("~/Login.aspx")
+            Response.Redirect("~/LoginForm.aspx")
         Else
             Dim cookie As HttpCookie = HttpContext.Current.Request.Cookies("EmpleadoASP")
             cookie.Value = "Activa"

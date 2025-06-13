@@ -167,7 +167,7 @@
                     <td>&nbsp;</td>
                 </tr>
             </table>
-
+            <p>Usuario: carlos / contraseña: 123456</p>
         </form>
     </div>
 </body>
