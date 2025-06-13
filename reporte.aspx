@@ -23,21 +23,21 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Reporte de Estudiantes"></asp:Label>
+            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Reporte de Bitacora"></asp:Label>
             <br />
             <br />
             <table class="auto-style3">
                 <tr>
-                    <td class="auto-style1">FECHA</td>
+                    <td class="auto-style1">FECHA: </td>
                     <td>
                         <asp:Label ID="lbFecha" runat="server" Text="Hoy"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style1">MATERIA</td>
+                    <td class="auto-style1">TABLA</td>
                     <td>
-                        <asp:Label ID="lbMateria" runat="server" Text="Matematicas"></asp:Label>
+                        <asp:Label ID="lbMateria" runat="server" Text="Bitacora"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -51,8 +51,11 @@
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="1017px">
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" />
-                <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
-                <asp:BoundField DataField="TELEFONO" HeaderText="TELEFONO" />
+                <asp:BoundField DataField="usuarioId" HeaderText="usuarioId" />
+                <asp:BoundField DataField="clienteId" HeaderText="clienteId" />
+                <asp:BoundField DataField="accion" HeaderText="accion" />
+                <asp:BoundField DataField="valorAnterior" HeaderText="valorAnterior" />
+                <asp:BoundField DataField="valorNuevo" HeaderText="valorNuevo" />
             </Columns>
             <HeaderStyle BorderStyle="Solid" ForeColor="#000099" />
         </asp:GridView>

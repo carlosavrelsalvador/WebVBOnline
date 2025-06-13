@@ -197,4 +197,25 @@ Public Class clientesForm
         Response.Cookies.Add(ecookie)
         Response.Redirect("~/LoginForm.aspx")
     End Sub
+
+    Protected Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        Conexiones.AbrirConexion()
+        Conexiones.Cnn.Open()
+
+        Dim da As New SqlClient.SqlDataAdapter("select TOP (1000) * from bitacora order by id desc", Conexiones.Cnn)
+        dst = New DataSet
+        da.Fill(dst)
+        If dst.Tables(0).Rows.Count > 0 Then
+            'Para enviar los valores al formulario de reporte
+            Session("grid") = dst.Tables(0)
+            Session("fecha") = Now
+            Session("materia") = "Bitacora"
+            Session("total") = dst.Tables(0).Rows.Count
+
+            Server.Transfer("reporte.aspx")
+        End If
+
+
+        Conexiones.Cnn.Close()
+    End Sub
 End Class

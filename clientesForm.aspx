@@ -109,8 +109,11 @@
 </head>
 <body>
     <form id="form1" runat="server" style="margin: 40px 400px 40px 400px;">
-        <div>
-            <asp:Button ID="btnSesion" runat="server" Text="CERRAR SESION" Width="200px" />
+        <div style="width: fit-content; display=auto; margin=30px auto">
+            <label>
+                <asp:Button ID="btnSesion" runat="server" Text="CERRAR SESION" Width="200px" />
+                <asp:Button ID="btnImprimir" runat="server" Text="BITACORA" Width="119px" />
+            </label>
         </div>
         <div class="form-style-3">
             <div style="width: fit-content; background-color: #99CCFF;">
