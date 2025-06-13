@@ -39,6 +39,9 @@ Public Class clientesForm
         'agregar nuevo
         Button2.Enabled = True
         Button2.Visible = True
+        'eliminar
+        Button4.Visible = False
+        Button4.Enabled = False
 
     End Sub
     Private Sub Poblar()
@@ -142,6 +145,9 @@ Public Class clientesForm
         Button2.Visible = False
         Button3.Enabled = True
         Button3.Visible = True
+        'eliminar
+        Button4.Visible = True
+        Button4.Enabled = True
     End Sub
 
     'editar
@@ -157,5 +163,23 @@ Public Class clientesForm
         Button2.Visible = False
         Button3.Enabled = False
         Button3.Visible = False
+    End Sub
+
+    'eliminar registro de cliente
+    Protected Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        VerificaCookie()
+
+        Conexiones.AbrirConexion()
+        Conexiones.Cnn.Open()
+
+        If MsgBox("¿Seguro que desea eliminar este registro ?", vbYesNo + vbCritical + vbDefaultButton2, "Atención") = vbYes Then
+            Dim cmd As New SqlClient.SqlCommand("delete from clientes where id=" & txtID.Text, Conexiones.Cnn)
+            cmd.ExecuteNonQuery()
+            Poblar()
+            Limpiar()
+            ControlesIniciales()
+        End If
+
+        Conexiones.Cnn.Close()
     End Sub
 End Class
