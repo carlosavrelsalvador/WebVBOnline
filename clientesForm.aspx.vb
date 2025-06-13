@@ -188,4 +188,13 @@ Public Class clientesForm
 
         Conexiones.Cnn.Close()
     End Sub
+
+    Protected Sub btnSesion_Click(sender As Object, e As EventArgs) Handles btnSesion.Click
+        Bitacora.bitacora(cookie.Value, 0, "cerrar sesion", "--", "--")
+        Dim ecookie As HttpCookie = HttpContext.Current.Request.Cookies("EmpleadoASP")
+        ecookie.Value = "Activa"
+        ecookie.Expires = Now
+        Response.Cookies.Add(ecookie)
+        Response.Redirect("~/LoginForm.aspx")
+    End Sub
 End Class

@@ -109,6 +109,9 @@
 </head>
 <body>
     <form id="form1" runat="server" style="margin: 40px 400px 40px 400px;">
+        <div>
+            <asp:Button ID="btnSesion" runat="server" Text="CERRAR SESION" Width="200px" />
+        </div>
         <div class="form-style-3">
             <div style="width: fit-content; background-color: #99CCFF;">
                 <h2>REGISTRO DE CLIENTES</h2>
