@@ -11,9 +11,6 @@
         Conexiones.AbrirConexion()
         Conexiones.Cnn.Open()
 
-        'Dim hash = New System.Security.Cryptography.SHA256Managed().ComputeHash(System.Text.Encoding.UTF8.GetBytes("123456"))
-        'MsgBox(Convert.ToBase64String(hash))
-
         Dim has As New OC.Core.Crypto.Hash
         Dim texto As String = txtClave.Text
         Dim TxtEncriptado As String = has.Sha256(texto).ToLower
@@ -23,7 +20,6 @@
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
             CreateCookies()
-
             Response.Redirect("~/clientesForm.aspx")
 
         Else
@@ -36,27 +32,31 @@
     End Sub
 
     Private Sub CreateCookies()
-        Dim FechaHora As String = Now.AddMinutes(3)
+        Dim FechaHora As String = Now.AddMinutes(30)
 
         If Request.Cookies("EmpleadoASP") Is Nothing Then
 
             Dim aCookie As New HttpCookie("EmpleadoASP")
-
             aCookie.Value = "Activa"
-
             aCookie.Expires = FechaHora
-
             Response.Cookies.Add(aCookie)
+            'nombre de usuario actual
+            Dim nCookie As New HttpCookie("nombreASP")
+            nCookie.Value = txtUsuario.Text
+            nCookie.Expires = FechaHora
+            Response.Cookies.Add(nCookie)
 
         Else
 
             Dim cookie As HttpCookie = HttpContext.Current.Request.Cookies("EmpleadoASP")
-
             cookie.Value = "Activa"
-
             cookie.Expires = FechaHora
-
             Response.Cookies.Add(cookie)
+            'nombre de usuario actual
+            Dim nCookie As HttpCookie = HttpContext.Current.Request.Cookies("nombreASP")
+            nCookie.Value = txtUsuario.Text
+            nCookie.Expires = FechaHora
+            Response.Cookies.Add(nCookie)
 
         End If
 

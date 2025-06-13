@@ -48,7 +48,7 @@ Public Class clientesForm
         Conexiones.AbrirConexion()
         Conexiones.Cnn.Open()
 
-        Dim da As New SqlClient.SqlDataAdapter("select * from clientes where NOMBRE LIKE '%" & txtBuscar & "%'", Conexiones.Cnn)
+        Dim da As New SqlClient.SqlDataAdapter("select * from clientes where NOMBRE LIKE '%" & txtBuscar & "%' order by [id] asc", Conexiones.Cnn)
         ' Dim ds As New DataSet
         dst = New DataSet
         da.Fill(dst)
