@@ -1,4 +1,5 @@
-﻿Imports System.Net
+﻿Imports System.Data.SqlClient
+Imports System.Net
 Imports System.Security.Cryptography
 
 Public Class clientesForm
@@ -51,18 +52,22 @@ Public Class clientesForm
         Conexiones.AbrirConexion()
         Conexiones.Cnn.Open()
 
-        Dim da As New SqlClient.SqlDataAdapter("select * from clientes where NOMBRE LIKE '%" & txtBuscar & "%' order by [id] asc", Conexiones.Cnn)
-        ' Dim ds As New DataSet
-        dst = New DataSet
-        da.Fill(dst)
-        If dst.Tables(0).Rows.Count > 0 Then
-            GridView1.DataSource = dst.Tables(0)
-            GridView1.DataBind()
-        Else
-            GridView1.DataSource = Nothing
-            GridView1.DataBind()
-        End If
+        'Dim da As New SqlClient.SqlDataAdapter("select * from clientes where NOMBRE LIKE '%" & txtBuscar & "%' order by [id] asc", Conexiones.Cnn)
+        Dim query As String = "select top 10 * from clientes order by [id] asc"
+        Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+            Dim da = New SqlDataAdapter(cmd)
 
+            dst = New DataSet
+            da.Fill(dst)
+            If dst.Tables(0).Rows.Count > 0 Then
+                GridView1.DataSource = dst.Tables(0)
+                GridView1.DataBind()
+            Else
+                GridView1.DataSource = Nothing
+                GridView1.DataBind()
+            End If
+
+        End Using
 
         Conexiones.Cnn.Close()
     End Sub
@@ -99,18 +104,42 @@ Public Class clientesForm
         If condicion Then
             Try
                 Conexiones.AbrirConexion()
-                Conexiones.Cnn.Open()
+                'Conexiones.Cnn.Open()
 
                 If txtID.Text = "0" Then
-                    Dim cmd As New SqlClient.SqlCommand("insert into clientes(nombre,correo,telefono,documento,direccion) values('" & field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text & "')", Conexiones.Cnn)
-                    cmd.ExecuteNonQuery()
-                    Bitacora.bitacora(Cookie.Value, txtID.Text, "agregar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
+                    'Dim cmd As New SqlClient.SqlCommand("insert into clientes(nombre,correo,telefono,documento,direccion) values('" & field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text & "')", Conexiones.Cnn)
+                    'cmd.ExecuteNonQuery()
+                    Dim query As String = "insert into clientes(nombre, correo, telefono, documento, direccion) values( @field1, @field2, @field3, @field4, @field5)"
+                    Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+                        cmd.Parameters.AddWithValue("@field1", field1.Text)
+                        cmd.Parameters.AddWithValue("@field2", field2.Text)
+                        cmd.Parameters.AddWithValue("@field3", field3.Text)
+                        cmd.Parameters.AddWithValue("@field4", field4.Text)
+                        cmd.Parameters.AddWithValue("@field5", field5.Text)
+                        Conexiones.Cnn.Open()
+                        cmd.ExecuteNonQuery()
+                    End Using
+                    Conexiones.Cnn.Close()
+                    Bitacora.bitacora(cookie.Value, txtID.Text, "agregar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
                     Poblar()
                     Limpiar()
                 Else
                     'actualizar datos del cliente 
-                    Dim cmd As New SqlClient.SqlCommand("update clientes Set nombre='" & field1.Text & "',correo='" & field2.Text & "',telefono='" & field3.Text & "',documento='" & field4.Text & "',direccion='" & field5.Text & "' where id=" & txtID.Text, Conexiones.Cnn)
-                    cmd.ExecuteNonQuery()
+                    'Dim cmd As New SqlClient.SqlCommand("update clientes Set nombre='" & field1.Text & "',correo='" & field2.Text & "',telefono='" & field3.Text & "',documento='" & field4.Text & "',direccion='" & field5.Text & "' where id=" & txtID.Text, Conexiones.Cnn)
+                    'cmd.ExecuteNonQuery()
+
+                    Dim query As String = "update clientes Set nombre=@field1, correo=@field2, telefono=@field3, documento=@field4, direccion=@field5 where id=@txtID"
+                    Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+                        cmd.Parameters.AddWithValue("@field1", field1.Text)
+                        cmd.Parameters.AddWithValue("@field2", field2.Text)
+                        cmd.Parameters.AddWithValue("@field3", field3.Text)
+                        cmd.Parameters.AddWithValue("@field4", field4.Text)
+                        cmd.Parameters.AddWithValue("@field5", field5.Text)
+                        cmd.Parameters.AddWithValue("@txtID", txtID.Text)
+                        Conexiones.Cnn.Open()
+                        cmd.ExecuteNonQuery()
+                    End Using
+                    Conexiones.Cnn.Close()
                     Bitacora.bitacora(cookie.Value, txtID.Text, "editar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
 
                     Poblar()
@@ -173,11 +202,20 @@ Public Class clientesForm
         VerificaCookie()
 
         Conexiones.AbrirConexion()
-        Conexiones.Cnn.Open()
+        'Conexiones.Cnn.Open()
 
         If MsgBox("¿Seguro que desea eliminar este registro ?", vbYesNo + vbCritical + vbDefaultButton2, "Atención") = vbYes Then
-            Dim cmd As New SqlClient.SqlCommand("delete from clientes where id=" & txtID.Text, Conexiones.Cnn)
-            cmd.ExecuteNonQuery()
+            'Dim cmd As New SqlClient.SqlCommand("delete from clientes where id=" & txtID.Text, Conexiones.Cnn)
+            'cmd.ExecuteNonQuery()
+
+            Dim query As String = "delete from clientes where id=@txtID"
+            Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+                cmd.Parameters.AddWithValue("@txtID", txtID.Text)
+                Conexiones.Cnn.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+            Conexiones.Cnn.Close()
+
             'Bitacora eliminar cliente
             Bitacora.bitacora(cookie.Value, txtID.Text, "eliminar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
 
@@ -186,7 +224,7 @@ Public Class clientesForm
             ControlesIniciales()
         End If
 
-        Conexiones.Cnn.Close()
+        'Conexiones.Cnn.Close()
     End Sub
 
     Protected Sub btnSesion_Click(sender As Object, e As EventArgs) Handles btnSesion.Click
@@ -202,20 +240,24 @@ Public Class clientesForm
         Conexiones.AbrirConexion()
         Conexiones.Cnn.Open()
 
-        Dim da As New SqlClient.SqlDataAdapter("select TOP (1000) * from bitacora order by id desc", Conexiones.Cnn)
-        dst = New DataSet
-        da.Fill(dst)
-        If dst.Tables(0).Rows.Count > 0 Then
-            'Para enviar los valores al formulario de reporte
-            Session("grid") = dst.Tables(0)
-            Session("fecha") = Now
-            Session("materia") = "Bitacora"
-            Session("total") = dst.Tables(0).Rows.Count
+        'Dim da As New SqlClient.SqlDataAdapter("select TOP (1000) * from bitacora order by id desc", Conexiones.Cnn)
+        Dim query As String = "select TOP (1000) * from bitacora order by id desc"
+        Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+            Dim da = New SqlDataAdapter(cmd)
+            dst = New DataSet
+            da.Fill(dst)
+            If dst.Tables(0).Rows.Count > 0 Then
+                'Para enviar los valores al formulario de reporte
+                Session("grid") = dst.Tables(0)
+                Session("fecha") = Now
+                Session("materia") = "Bitacora"
+                Session("total") = dst.Tables(0).Rows.Count
 
-            Server.Transfer("reporte.aspx")
-        End If
+                Server.Transfer("reporte.aspx")
+            End If
 
-
+        End Using
         Conexiones.Cnn.Close()
+
     End Sub
 End Class
