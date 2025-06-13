@@ -29,12 +29,12 @@ Public Class LoginForm
             da.Fill(ds)
             If ds.Tables(0).Rows.Count > 0 Then
                 idShared = ds.Tables(0).Rows(0).Item("id")
-                Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "valor", "valor") ' Log successful login
+                Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "--", txtUsuario.Text) ' Log successful login
                 CreateCookies()
                 Response.Redirect("~/clientesForm.aspx")
 
             Else
-                Bitacora.bitacora(0, 0, "fail login", "valor", "usuario=" & txtUsuario.Text) ' Log successful login
+                Bitacora.bitacora(0, 0, "fail login", "--", "usuario=" & txtUsuario.Text) ' Log successful login
                 MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
                 'Console.WriteLine("usuario incorrecto!")
 
