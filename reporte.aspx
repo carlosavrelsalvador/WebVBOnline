@@ -51,18 +51,20 @@
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="1017px">
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" />
-                <asp:BoundField DataField="usuarioId" HeaderText="usuarioId" />
-                <asp:BoundField DataField="clienteId" HeaderText="clienteId" />
-                <asp:BoundField DataField="accion" HeaderText="accion" />
-                <asp:BoundField DataField="valorAnterior" HeaderText="valorAnterior" />
-                <asp:BoundField DataField="valorNuevo" HeaderText="valorNuevo" />
+                <asp:BoundField DataField="usuarioId" HeaderText="Usuario Id" />
+                <asp:BoundField DataField="clienteId" HeaderText="Cliente Id" />
+                <asp:BoundField DataField="accion" HeaderText="Accion" />
+                <asp:BoundField DataField="valorAnterior" HeaderText="Valor Anterior" />
+                <asp:BoundField DataField="valorNuevo" HeaderText="Valor Nuevo" />
+                <asp:BoundField DataField="fechaSis" HeaderText="Fecha Registro" />
+                
             </Columns>
             <HeaderStyle BorderStyle="Solid" ForeColor="#000099" />
         </asp:GridView>
      
         <table class="auto-style3">
             <tr>
-                <td class="auto-style2" style="border: thin solid #0000FF">Total de estudiantes</td>
+                <td class="auto-style2" style="border: thin solid #0000FF">Total de registros</td>
                 <td colspan="2" style="border: thin solid #0000FF">
                     <asp:Label ID="LbTotal" runat="server" Text="0"></asp:Label>
                 </td>
