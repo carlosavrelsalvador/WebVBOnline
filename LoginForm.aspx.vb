@@ -1,4 +1,5 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Data.SqlClient
+Imports System.Security.Cryptography
 
 Public Class LoginForm
     Inherits System.Web.UI.Page
@@ -17,21 +18,28 @@ Public Class LoginForm
         Dim texto As String = txtClave.Text
         Dim TxtEncriptado As String = has.Sha256(texto).ToLower
 
-        Dim da As New SqlClient.SqlDataAdapter("select * from usuarios where usuario='" & txtUsuario.Text & "' and clave='" & TxtEncriptado & "'", Conexiones.Cnn)
-        Dim ds As New DataSet
-        da.Fill(ds)
-        If ds.Tables(0).Rows.Count > 0 Then
-            idShared = ds.Tables(0).Rows(0).Item("id")
-            Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "valor", "valor") ' Log successful login
-            CreateCookies()
-            Response.Redirect("~/clientesForm.aspx")
+        Dim query As String = "select * from usuarios where usuario = @usuario and clave=@clave"
+        Using cmd As New SqlClient.SqlCommand(query, Conexiones.Cnn)
+            cmd.Parameters.AddWithValue("@usuario", txtUsuario.Text)
+            cmd.Parameters.AddWithValue("@clave", TxtEncriptado)
+            Dim da = New SqlDataAdapter(cmd)
 
-        Else
-            Bitacora.bitacora(0, 0, "fail login", "valor", "usuario=" & txtUsuario.Text) ' Log successful login
-            MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
-            'Console.WriteLine("usuario incorrecto!")
+            'Dim da As New SqlClient.SqlDataAdapter("select * from usuarios where usuario='" & txtUsuario.Text & "' and clave='" & TxtEncriptado & "'", Conexiones.Cnn)
+            Dim ds As New DataSet
+            da.Fill(ds)
+            If ds.Tables(0).Rows.Count > 0 Then
+                idShared = ds.Tables(0).Rows(0).Item("id")
+                Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "valor", "valor") ' Log successful login
+                CreateCookies()
+                Response.Redirect("~/clientesForm.aspx")
 
-        End If
+            Else
+                Bitacora.bitacora(0, 0, "fail login", "valor", "usuario=" & txtUsuario.Text) ' Log successful login
+                MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
+                'Console.WriteLine("usuario incorrecto!")
+
+            End If
+        End Using
 
         Conexiones.Cnn.Close()
     End Sub
