@@ -1,9 +1,12 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Net
+Imports System.Security.Cryptography
 
 Public Class clientesForm
     Inherits System.Web.UI.Page
     Public dst As DataSet
     Dim txtBuscar As String = String.Empty
+    Dim cookie As HttpCookie = HttpContext.Current.Request.Cookies("idASP")
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         VerificaCookie()
         ControlesIniciales()
@@ -55,8 +58,6 @@ Public Class clientesForm
         If dst.Tables(0).Rows.Count > 0 Then
             GridView1.DataSource = dst.Tables(0)
             GridView1.DataBind()
-            'ocultando el boton de eliminar
-            'GridView1.Columns.Item(6).Visible = False
         Else
             GridView1.DataSource = Nothing
             GridView1.DataBind()
@@ -103,12 +104,14 @@ Public Class clientesForm
                 If txtID.Text = "0" Then
                     Dim cmd As New SqlClient.SqlCommand("insert into clientes(nombre,correo,telefono,documento,direccion) values('" & field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text & "')", Conexiones.Cnn)
                     cmd.ExecuteNonQuery()
-
+                    Bitacora.bitacora(Cookie.Value, txtID.Text, "agregar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
                     Poblar()
                     Limpiar()
                 Else
+                    'actualizar datos del cliente 
                     Dim cmd As New SqlClient.SqlCommand("update clientes Set nombre='" & field1.Text & "',correo='" & field2.Text & "',telefono='" & field3.Text & "',documento='" & field4.Text & "',direccion='" & field5.Text & "' where id=" & txtID.Text, Conexiones.Cnn)
                     cmd.ExecuteNonQuery()
+                    Bitacora.bitacora(cookie.Value, txtID.Text, "editar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
 
                     Poblar()
                     Limpiar()
@@ -175,6 +178,9 @@ Public Class clientesForm
         If MsgBox("¿Seguro que desea eliminar este registro ?", vbYesNo + vbCritical + vbDefaultButton2, "Atención") = vbYes Then
             Dim cmd As New SqlClient.SqlCommand("delete from clientes where id=" & txtID.Text, Conexiones.Cnn)
             cmd.ExecuteNonQuery()
+            'Bitacora eliminar cliente
+            Bitacora.bitacora(cookie.Value, txtID.Text, "eliminar cliente", "--", field1.Text & "','" & field2.Text & "','" & field3.Text & "','" & field4.Text & "', '" & field5.Text)
+
             Poblar()
             Limpiar()
             ControlesIniciales()

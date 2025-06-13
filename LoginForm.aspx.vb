@@ -2,7 +2,7 @@
 
 Public Class LoginForm
     Inherits System.Web.UI.Page
-
+    Public Shared idShared As Int32 = "0"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
@@ -21,6 +21,7 @@ Public Class LoginForm
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
+            idShared = ds.Tables(0).Rows(0).Item("id")
             Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "valor", "valor") ' Log successful login
             CreateCookies()
             Response.Redirect("~/clientesForm.aspx")
@@ -49,6 +50,11 @@ Public Class LoginForm
             nCookie.Value = txtUsuario.Text
             nCookie.Expires = FechaHora
             Response.Cookies.Add(nCookie)
+            'ID de usuario actual
+            Dim idCookie As New HttpCookie("idASP")
+            idCookie.Value = idShared
+            idCookie.Expires = FechaHora
+            Response.Cookies.Add(idCookie)
 
         Else
 
