@@ -23,8 +23,8 @@
                 font-weight: bold;
                 font-size: 13px;
                 text-shadow: 1px 1px 1px #fff;
-            height: 15px;
-        }
+                height: 15px;
+            }
 
         .form-style-3 fieldset {
             border-radius: 10px;
@@ -109,60 +109,60 @@
 </head>
 <body>
     <form id="form1" runat="server" style="margin: 40px 400px 40px 400px;">
-    <div class="form-style-3">
-        <div style="width: fit-content; background-color: #99CCFF;">
-            <h2>REGISTRO DE CLIENTES</h2>
-            <fieldset>
-                <legend>Cliente</legend>
-                <label for="txtID">
-                    <span>ID <span class="required">*</span></span>
-                    <asp:TextBox ID="txtID" runat="server" Width="50px"></asp:TextBox>
-                </label>
-                <label for="field1">
-                    <span>Nombre <span class="required">*</span></span>
-                    <asp:TextBox ID="field1" runat="server" Width="215px"></asp:TextBox>
-                </label>
-                <label for="field2">
-                    <span>Email <span class="required">*</span></span>
-                    <asp:TextBox ID="field2" runat="server" Width="215px"></asp:TextBox>
-                </label>
-                <label for="field3">
-                    <span>Telefono<span class="required"> *</span></span>
-                    <asp:TextBox ID="field3" runat="server" Width="215px"></asp:TextBox>
-                </label>
-                <label for="field4">
-                    <span>DUI<span class="required"> *</span></span>
-                    <asp:TextBox ID="field4" runat="server" Width="215px"></asp:TextBox>
-                </label>
-                <label for="field5">
-                    <span>Direccion<span class="required"> *</span></span>
-                    <asp:TextBox ID="field5" runat="server" Width="215px"></asp:TextBox>
-                </label>
-            </fieldset>
-            <fieldset>
-                <legend>Acciones</legend>
-                <label>
-                    <asp:Button ID="btnBuscar" runat="server" Text="VER" Width="119px" />
-                    <asp:Button ID="Button2" runat="server" Text="AGREGAR NUEVO" Width="200px" />
-                    <asp:Button ID="Button5" runat="server" Text="ACEPTAR" Width="119px" />
-                    <asp:Button ID="Button3" runat="server" Text="EDITAR" Width="119px" />
-                    <asp:Button ID="Button1" runat="server" Text="CANCELAR" Width="119px" />
-                    <asp:Button ID="Button4" runat="server" Text="ELIMINAR" Width="119px" />
-                </label>
-            </fieldset>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="672px">
-                <Columns>
-                    <asp:BoundField DataField="ID" HeaderText="ID" />
-                    <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
-                    <asp:BoundField DataField="CORREO" HeaderText="CORREO" />
-                    <asp:BoundField DataField="TELEFONO" HeaderText="TELEFONO" />
-                    <asp:BoundField DataField="DOCUMENTO" HeaderText="DOCUMENTO" />
-                    <asp:BoundField DataField="DIRECCION" HeaderText="DIRECCION" />
-                    <asp:ButtonField CommandName="Select" HeaderText="CHECK" ShowHeader="True" Text="SELECT" />
-                </Columns>
-            </asp:GridView>
+        <div class="form-style-3">
+            <div style="width: fit-content; background-color: #99CCFF;">
+                <h2>REGISTRO DE CLIENTES</h2>
+                <fieldset>
+                    <legend>Cliente</legend>
+                    <label for="txtID">
+                        <span>ID <span class="required">*</span></span>
+                        <asp:TextBox ID="txtID" runat="server" Width="50px"></asp:TextBox>
+                    </label>
+                    <label for="field1">
+                        <span>Nombre <span class="required">*</span></span>
+                        <asp:TextBox ID="field1" runat="server" Width="215px"></asp:TextBox>
+                    </label>
+                    <label for="field2">
+                        <span>Email <span class="required">*</span></span>
+                        <asp:TextBox ID="field2" runat="server" Width="215px"></asp:TextBox>
+                    </label>
+                    <label for="field3">
+                        <span>Telefono<span class="required"> *</span></span>
+                        <asp:TextBox ID="field3" runat="server" Width="215px"></asp:TextBox>
+                    </label>
+                    <label for="field4">
+                        <span>DUI<span class="required"> *</span></span>
+                        <asp:TextBox ID="field4" runat="server" Width="215px"></asp:TextBox>
+                    </label>
+                    <label for="field5">
+                        <span>Direccion<span class="required"> *</span></span>
+                        <asp:TextBox ID="field5" runat="server" Width="215px"></asp:TextBox>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend>Acciones</legend>
+                    <label>
+                        <asp:Button ID="btnBuscar" runat="server" Text="VER" Width="119px" />
+                        <asp:Button ID="Button2" runat="server" Text="AGREGAR NUEVO" Width="200px" />
+                        <asp:Button ID="Button5" runat="server" Text="ACEPTAR" Width="119px" />
+                        <asp:Button ID="Button3" runat="server" Text="EDITAR" Width="119px" />
+                        <asp:Button ID="Button1" runat="server" Text="CANCELAR" Width="119px" />
+                        <asp:Button ID="Button4" runat="server" Text="ELIMINAR" Width="119px" />
+                    </label>
+                </fieldset>
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="672px">
+                    <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="ID" />
+                        <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
+                        <asp:BoundField DataField="CORREO" HeaderText="CORREO" />
+                        <asp:BoundField DataField="TELEFONO" HeaderText="TELEFONO" />
+                        <asp:BoundField DataField="DOCUMENTO" HeaderText="DOCUMENTO" />
+                        <asp:BoundField DataField="DIRECCION" HeaderText="DIRECCION" />
+                        <asp:ButtonField CommandName="Select" HeaderText="CHECK" ShowHeader="True" Text="SELECT" />
+                    </Columns>
+                </asp:GridView>
+            </div>
         </div>
-    </div>
     </form>
 </body>
 </html>

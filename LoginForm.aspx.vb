@@ -1,4 +1,6 @@
-﻿Public Class LoginForm
+﻿Imports System.Security.Cryptography
+
+Public Class LoginForm
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -19,10 +21,12 @@
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
+            Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "login", "valor", "valor") ' Log successful login
             CreateCookies()
             Response.Redirect("~/clientesForm.aspx")
 
         Else
+            Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "fail login", "valor", "valor") ' Log successful login
             MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
             'Console.WriteLine("usuario incorrecto!")
 
