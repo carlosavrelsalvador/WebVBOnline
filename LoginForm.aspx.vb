@@ -26,7 +26,7 @@ Public Class LoginForm
             Response.Redirect("~/clientesForm.aspx")
 
         Else
-            Bitacora.bitacora(ds.Tables(0).Rows(0).Item("id"), 0, "fail login", "valor", "valor") ' Log successful login
+            Bitacora.bitacora(0, 0, "fail login", "valor", "usuario=" & txtUsuario.Text) ' Log successful login
             MsgBox("usuario incorrecto! ", vbCritical, "Login Error")
             'Console.WriteLine("usuario incorrecto!")
 
